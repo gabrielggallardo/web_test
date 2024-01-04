@@ -1,2 +1,8 @@
 # Project exclude paths
 /out/
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml

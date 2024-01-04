@@ -2,10 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.appointment.AddAppointments">
+<AnchorPane prefHeight="530.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.appointment.AddAppointmentsController">
    <children>
       <HBox alignment="CENTER" prefHeight="37.0" prefWidth="525.0">
          <children>
@@ -51,63 +50,27 @@
                   <Label text="Appointment ID" />
                   <Label layoutX="10.0" layoutY="11.0" text="Title" GridPane.rowIndex="1" />
                   <Label layoutX="10.0" layoutY="30.0" text="Description" GridPane.rowIndex="2" />
-                  <Label text="Location" GridPane.rowIndex="5" />
-                  <Label text="Start Date" GridPane.rowIndex="6" />
-                  <Label text="Start Time" GridPane.rowIndex="7" />
-                  <Label text="End Date" GridPane.rowIndex="8" />
-                  <Label text="End Time" GridPane.rowIndex="9" />
-                  <Label text="Customer" GridPane.rowIndex="10" />
-                  <Label text="User" GridPane.rowIndex="11" />
+                  <Label text="Start Date" GridPane.rowIndex="5" />
+                  <Label text="Start Time" GridPane.rowIndex="6" />
+                  <Label text="End Date" GridPane.rowIndex="7" />
+                  <Label text="End Time" GridPane.rowIndex="8" />
+                  <Label text="Customer_ID" GridPane.rowIndex="9" />
+                  <Label text="User_ID" GridPane.rowIndex="10" />
                   <TextField fx:id="appointmentIDTxt" opacity="0.5" prefWidth="307.0" GridPane.columnIndex="1" />
                   <TextField fx:id="titleTxt" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="descriptionTxt" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Type" GridPane.rowIndex="4" />
-                  <Label text="Contact" GridPane.rowIndex="3" />
-                  <MenuButton fx:id="contactMenuBtn" mnemonicParsing="false" prefWidth="307.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
-                  <MenuButton fx:id="typeMenuBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="307.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
-                  <TextField fx:id="locationTxt" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <MenuButton fx:id="userMenuBtn" mnemonicParsing="false" prefWidth="307.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </MenuButton>
-                  <MenuButton fx:id="customerMenuBtn" mnemonicParsing="false" prefWidth="307.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
-                  <MenuButton fx:id="endTimeMenuBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefWidth="307.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
-                  <DatePicker fx:id="endDatePicker" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <DatePicker fx:id="startDatePicker" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <MenuButton fx:id="startTimeMenuBtn" mnemonicParsing="false" prefWidth="307.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </MenuButton>
+                  <Label text="Location" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="endDatePicker" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <DatePicker fx:id="startDatePicker" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="startTimeComboBox" prefHeight="25.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <ComboBox fx:id="endTimeComboBox" prefHeight="25.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <ComboBox fx:id="customerIDComboBox" prefHeight="25.0" prefWidth="236.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <ComboBox fx:id="userIDComboBox" prefHeight="25.0" prefWidth="238.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="locationTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="typeTxt" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Contact_ID" GridPane.rowIndex="11" />
+                  <ComboBox fx:id="contactIDComboBox" prefHeight="25.0" prefWidth="258.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                </children>
                <padding>
                   <Insets left="16.0" right="16.0" />
@@ -115,8 +78,8 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="506.0" spacing="16.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="60.0" text="Save" />
-                  <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="60.0" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#onActionSaveAppointmentBtn" prefHeight="24.0" prefWidth="60.0" text="Save" />
+                  <Button mnemonicParsing="false" onAction="#onActionBackBtn" prefHeight="24.0" prefWidth="60.0" text="Cancel" />
                </children>
                <padding>
                   <Insets bottom="16.0" right="16.0" top="16.0" />
@@ -127,5 +90,6 @@
             <Insets left="16.0" right="16.0" />
          </padding>
       </VBox>
+      <ComboBox layoutX="20.0" layoutY="-50.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="504.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.Customers">
+<AnchorPane prefHeight="504.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customer.CustomerTableController">
    <children>
       <VBox layoutX="13.0" prefHeight="506.0" prefWidth="618.0">
          <children>
@@ -29,12 +29,12 @@
                   </Label>
                </children>
             </HBox>
-            <TableView prefHeight="366.0" prefWidth="586.0">
+            <TableView fx:id="allCustomersTable" prefHeight="366.0" prefWidth="586.0">
                <columns>
                   <TableColumn fx:id="customerCustomerIDColumn" prefWidth="72.0" text="Customer ID" />
-                  <TableColumn fx:id="nameColumn" prefWidth="108.0" text="Name" />
-                  <TableColumn fx:id="addressColumn" prefWidth="93.0" text="Address" />
-                  <TableColumn fx:id="firstlevelDivColumn" prefWidth="85.0" text="First-level Div" />
+                  <TableColumn fx:id="nameColumn" prefWidth="73.0" text="Name" />
+                  <TableColumn fx:id="addressColumn" prefWidth="83.0" text="Address" />
+                  <TableColumn fx:id="firstlevelDivColumn" prefWidth="130.0" text="First-level Div" />
                   <TableColumn fx:id="countryColumn" text="Country" />
                   <TableColumn fx:id="postalColumn" prefWidth="73.5" text="Postal" />
                   <TableColumn fx:id="phoneColumn" prefWidth="73.5" text="Phone #" />
@@ -50,8 +50,8 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="354.0" spacing="16.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onActionAppointmentsButton" prefHeight="24.0" prefWidth="100.0" style="-fx-background-color: #FED5CF;" text="Appointments" />
-                        <Button mnemonicParsing="false" onAction="#onActionReportsButton" prefHeight="24.0" prefWidth="100.0" style="-fx-background-color: #F07857;" text="Reports" />
+                        <Button mnemonicParsing="false" onAction="#onActionAppointmentsButton" prefHeight="24.0" prefWidth="100.0" style="-fx-background-color: #348ceb;" text="Appointments" textFill="WHITE" />
+                        <Button mnemonicParsing="false" onAction="#onActionReportsButton" prefHeight="24.0" prefWidth="100.0" style="-fx-background-color: #348ceb;" text="Reports" textFill="WHITE" />
                         <Button mnemonicParsing="false" onAction="#onActionLogoutButton" prefHeight="24.0" prefWidth="100.0" text="Logout" />
                      </children>
                      <padding>
@@ -59,8 +59,8 @@
                      </padding>
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#onActionDeleteCustomersButton" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #ff0000;" text="Delete" />
-                  <Button mnemonicParsing="false" onAction="#onActionModifyCustomersButton" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #FFFF00;" text="Modify" />
-                  <Button mnemonicParsing="false" onAction="#onActionAddCustomersButton" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #00FF00;" text="Add" />
+                  <Button mnemonicParsing="false" onAction="#onActionModifyCustomersButton" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #66c497;" text="Modify" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#onActionAddCustomersButton" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #348ceb;" text="Add" textFill="WHITE" />
                </children>
                <padding>
                   <Insets right="4.0" />
