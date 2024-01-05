@@ -31,7 +31,7 @@ public class CustomerTableController {
     private TableColumn<Customer, String> addressColumn;
 
     @FXML
-    private TableColumn<Country, Country> countryColumn; //customerCountryColumn
+    private TableColumn<Customer, Integer> countryColumn; //customerCountryColumn
 
     @FXML
     private TableColumn<Customer, Integer> customerCustomerIDColumn;
@@ -62,18 +62,9 @@ public class CustomerTableController {
         addressColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
         postalColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("postalCode"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
-        firstlevelDivColumn.setCellValueFactory(new PropertyValueFactory<>("division"));
-        firstlevelDivColumn.setCellFactory(column -> new TableCell<Customer,Division>(){
-            @Override
-            protected void updateItem(Division division, boolean empty){
-                super.updateItem(division, empty);
-                if(empty){
-                    setText(null);
-                } else {
-                    setText(division.getName());
-                }
-            }
-        });
+        countryColumn.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("divisionCountryId"));
+
+
 
 
 

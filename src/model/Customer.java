@@ -17,6 +17,8 @@ public class Customer {
     private String postalCode;
     private String phone;
     private Division division; //this will be the FK
+    private int divisionCountryId;
+
 
     public Customer(int id, String name, String address, String postalCode, String phone, Division division){
         this.id = id;
@@ -25,6 +27,7 @@ public class Customer {
         this.postalCode = postalCode;
         this.phone = phone;
         this.division = division;
+        this.divisionCountryId = division.getCountry().getCountryID();
     }
 
     public static ObservableList<Customer> createCustomerListFromQuery(ResultSet rs) throws SQLException {
@@ -94,6 +97,8 @@ public class Customer {
     public void setDivision(Division division) {
         this.division = division;
     }
-
+    public int getDivisionCountryId() {
+        return divisionCountryId;
+    }
 // setters and getters for Customers.
 }
