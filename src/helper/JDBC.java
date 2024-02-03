@@ -19,11 +19,14 @@ public abstract class JDBC {
     {
         try {
             Class.forName(driver); // Locate Driver
+            System.out.println("Driver located!");
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
+
             System.out.println("Connection successful!");
         }
         catch(Exception e)
         {
+            System.out.println("sucker ain't workin");
             System.out.println("Error:" + e.getMessage());
         }
     }
