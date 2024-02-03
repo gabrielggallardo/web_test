@@ -17,10 +17,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.User;
 
+import java.io.*;
 import java.sql.SQLException;
 import java.time.ZoneId;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -112,10 +111,7 @@ public class LoginViewController implements Initializable {
 
         boolean didFindMatch = false;
         for(User user : allUsers){
-//            System.out.println(user.getUsername());
-//            System.out.println(user.getPassword());
-//            System.out.println(username);
-//            System.out.println(password);
+
             //check to see if username AND password match
             if(username.equals(user.getUsername()) && password.equals(user.getPassword())){
                 System.out.println("username and password matched");
@@ -128,7 +124,10 @@ public class LoginViewController implements Initializable {
         }
         //check to see if we found a match
         if(didFindMatch){
-//            System.out.println("did find a match");
+
+            //log the activity
+            logActivity("User: " + username + " logged in at: " + java.time.LocalDateTime.now() + "\n");
+
             //go to the next screen
 
             Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/customer.fxml")));
@@ -137,10 +136,12 @@ public class LoginViewController implements Initializable {
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
-//            System.out.println("print finished showing scene");
+
 
         } else{
-//            System.out.println("Did not find a match!");
+            // log the activity
+            logActivity("User: " + username + " failed to log in at: " + java.time.LocalDateTime.now() + "\n");
+
             //show the error message
             errorLabel.setVisible(true);
         }
@@ -162,36 +163,26 @@ public class LoginViewController implements Initializable {
         errorLabel.setText(langBundle.getString("loginErrorMessage"));
 
 
-
-
-
-
-        //This is a good place according to Mark Kinkead to check for the language that the application is in since it's the beginning of the app.
-
-
-
     }
 
+    private void logActivity(String entry) {
+        System.out.println(entry);
+
+        try {
+            // use PrintWriter
+            FileWriter out = new FileWriter("login_activity.txt", true);
+
+            // write to the file
+            out.append(entry);
+
+            // close the file
+            out.close();
 
 
-
-
-//    public void login_button_pressed(ActionEvent event) throws IOException {
-//
-//        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-//        scene = FXMLLoader.load(getClass().getResource("/view/appointments.fxml"));
-//        stage.setScene(new Scene(scene));
-//        stage.show();
-//
-//        System.out.println("Switching to Appointments View!");
-//        location_label.setText("France, bonjour!");
-//
-//
-//
-//
-//    }
-
-
-
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 
 }
