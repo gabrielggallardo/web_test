@@ -4,12 +4,43 @@ import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.Contacts;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AppointmentManager {
+
+    public static ObservableList<Appointment> getAllAppointmentsForContact(Contacts contact) throws SQLException {
+        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, contact.getContactID());
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String appointmentDescription = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            String appointmentType = rs.getString("Type");
+            LocalDateTime appointmentStartTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEndTime = rs.getTimestamp("End").toLocalDateTime();
+            int customerID = rs.getInt("Customer_ID");
+            int userID = rs.getInt("User_ID");
+            int contactID = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    appointmentDescription,
+                    appointmentLocation,
+                    appointmentType,
+                    appointmentStartTime,
+                    appointmentEndTime,
+                    customerID,
+                    userID,
+                    contactID);
+            appointmentList.add(appointment);
+        }
+        return appointmentList;
+    }
 
     public static ObservableList<Appointment> getAppointmentsInDateRange(LocalDate start, LocalDate end ) throws SQLException {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();

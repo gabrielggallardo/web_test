@@ -3,10 +3,7 @@ package Managers;
 import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Appointment;
-import model.Country;
-import model.Customer;
-import model.Division;
+import model.*;
 
 import java.sql.Array;
 import java.sql.PreparedStatement;
@@ -17,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerManager {
-
 
     public static ObservableList<Customer> getCustomerList() throws SQLException {
     ObservableList<Customer> customerList = FXCollections.observableArrayList();
