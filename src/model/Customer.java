@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class Customer {
     //most recent changes seeing if commit works
 
-
     private int id;
     private String name;
     private String address;
@@ -18,9 +17,15 @@ public class Customer {
     private String phone;
     private Division division; //this will be the FK
     private int divisionCountryId;
+    private LocalDateTime createDate;
 
 
-    public Customer(int id, String name, String address, String postalCode, String phone, Division division){
+    /**
+     * This method gets the customer list from the customers table
+     * @return
+     * @throws SQLException
+     */
+    public Customer(int id, String name, String address, String postalCode, String phone, Division division, LocalDateTime createDate) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -28,27 +33,9 @@ public class Customer {
         this.phone = phone;
         this.division = division;
         this.divisionCountryId = division.getCountry().getCountryID();
+        this.createDate = createDate;
     }
 
-    public static ObservableList<Customer> createCustomerListFromQuery(ResultSet rs) throws SQLException {
-        ObservableList<Customer> customers = FXCollections.observableArrayList();
-        while (rs.next()) {
-
-                    //new is object #1
-            customers.add(new Customer(
-                    rs.getInt("Customer_ID"),
-                    rs.getString("Customer_Name"),
-                    rs.getString("Address"),
-                    rs.getString("Postal_Code"),
-                    rs.getString("Phone"),
-                    //this is object #2                                                 this is object #3
-                    new Division(rs.getInt("Division_ID"), "Division", new Country(1, "Country"))
-            ));
-
-        }
-        return customers;
-
-    }
 
     public int getId() {
         return id;
@@ -99,6 +86,10 @@ public class Customer {
     }
     public int getDivisionCountryId() {
         return divisionCountryId;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 // setters and getters for Customers.
 }

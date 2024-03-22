@@ -19,6 +19,9 @@ import model.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalTime;
+/**
+ * This class is the controller for the AddAppointments.fxml view
+ */
 
 public class AddAppointmentsController {
     Stage stage;
@@ -59,6 +62,11 @@ public class AddAppointmentsController {
 
     @FXML
     private ComboBox<User> userIDComboBox;
+    /**
+     * This method changes the scene to the appointments view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionBackBtn(ActionEvent event) throws IOException {
@@ -68,6 +76,11 @@ public class AddAppointmentsController {
         stage.show();
 
     }
+    /**
+     * This method saves the appointment to the database
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionSaveAppointmentBtn(ActionEvent event) throws IOException {
@@ -92,10 +105,6 @@ public class AddAppointmentsController {
         startTimeComboBox.setItems(appointmentTimes);
         endTimeComboBox.setItems(appointmentTimes);
         contactIDComboBox.setItems(allContactsNames);
-
-
-
-
 
         try {
             customerOptions = CustomerManager.getCustomerList();

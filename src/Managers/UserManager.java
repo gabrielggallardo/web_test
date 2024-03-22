@@ -10,8 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-
+/**
+ * This class is the manager for the users table
+ */
 public class UserManager {
+    /**
+     * This method gets the user list from the users table
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<User> getUserList() throws SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList();
 

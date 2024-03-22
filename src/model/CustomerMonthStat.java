@@ -1,15 +1,15 @@
 package model;
 
-public class AppointmentMonthStat {
+public class CustomerMonthStat {
     private String month;
     private int total;
 
     /**
-     * This is the constructor for the AppointmentMonthStat class
+     * This is the constructor for the CustomerMonthStat class
      * @param month
      * @param total
      */
-    public AppointmentMonthStat(String month, int total){
+    public CustomerMonthStat(String month, int total){
         this.month = month;
         this.total = total;
     }

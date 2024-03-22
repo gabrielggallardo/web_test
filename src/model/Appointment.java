@@ -14,6 +14,19 @@ public class Appointment {
     private int userID;
     private int contactID;
 
+    /**
+     * This is the constructor for the Appointment class
+     * @param id
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param startTime
+     * @param endTime
+     * @param customerID
+     * @param userID
+     * @param contactID
+     */
     public Appointment(int id, String title, String description, String location,
                        String type, LocalDateTime startTime, LocalDateTime endTime, int customerID,
                        int userID, int contactID){

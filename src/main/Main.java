@@ -7,6 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class is the main class for the application
+ */
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -15,7 +18,10 @@ public class Main extends Application {
         stage.setScene(new Scene(root, 300, 250));
         stage.show();
     }
-
+    /**
+     * This method is the main method for the application
+     * @param args
+     */
     public static void main(String[] args){
         JDBC.openConnection();
         launch(args);

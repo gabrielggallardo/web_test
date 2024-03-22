@@ -26,6 +26,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+/**
+ * This class is the controller for the AppointmentTable.fxml view
+ */
 
 
 public class AppointmentTableController {
@@ -88,6 +91,10 @@ public class AppointmentTableController {
     private LocalDate selectedStart;
     private LocalDate selectedEnd;
 
+    /**
+     * This method initializes the AppointmentTableController
+     * @throws SQLException
+     */
 
     public void initialize() throws SQLException{
         try {
@@ -118,6 +125,10 @@ public class AppointmentTableController {
         dateRangeForwardBtn.setDisable(true);
 
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     void updateDateRangeLabel() {
 
@@ -148,6 +159,10 @@ public class AppointmentTableController {
 
 
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     void updateAppointmentsData() {
         // check if there is a start or end date
@@ -172,6 +187,10 @@ public class AppointmentTableController {
             allAppointmentsTable.setItems(appointmentList);
         }
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     @FXML
     void onBackDateRangeBtnClicked(ActionEvent event) {
@@ -213,6 +232,10 @@ public class AppointmentTableController {
 
         }
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     @FXML
     void onNextDateRangeBtnClicked(ActionEvent event) {
@@ -255,8 +278,10 @@ public class AppointmentTableController {
         }
     }
 
-
-
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
     @FXML
     void onAllRadioBtnSelected(ActionEvent event) {
         System.out.println("All Radio Button Selected");
@@ -275,6 +300,10 @@ public class AppointmentTableController {
         updateDateRangeLabel();
         updateAppointmentsData();
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     @FXML
     void onMonthRadioBtnSelected(ActionEvent event) {
@@ -296,6 +325,10 @@ public class AppointmentTableController {
         updateAppointmentsData();
 
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     @FXML
     void onWeekRadioBtnSelected(ActionEvent event) {
@@ -318,6 +351,10 @@ public class AppointmentTableController {
 
 
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
 
     @FXML
@@ -328,11 +365,11 @@ public class AppointmentTableController {
         stage.show();
         //appointmentList.add(new Appointment(7, "title", "description", "location", "type", LocalDateTime.now(), LocalDateTime.now(), 1,1,1));
 
-
-
-
-
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     @FXML
     void onActionCustomersButton(ActionEvent event) throws IOException {
@@ -345,6 +382,7 @@ public class AppointmentTableController {
 
     }
 
+
     @FXML
     void onActionDeleteAppointmentsButton(ActionEvent event) {
 
@@ -355,6 +393,10 @@ public class AppointmentTableController {
 
     }
 
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
     @FXML
     void onActionReportsButton(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -365,14 +407,15 @@ public class AppointmentTableController {
         System.out.println("Switching to the reportsFirstScreen.fxml view");
 
     }
+    /**
+     * This method is used to change the scene to the AddAppointment.fxml view
+     * @throws IOException
+     */
 
     public void onActionLogoutButton(ActionEvent event) {
         //This is the code to shutdown the application
         System.out.println("Shutting down! Goodbye.");
         System.exit(0);
-
-
     }
-
 
 }

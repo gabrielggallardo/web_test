@@ -21,6 +21,10 @@ import model.Division;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * This class is the controller for the CustomerTable.fxml view
+ */
+
 public class CustomerTableController {
     Stage stage;
     Parent scene;
@@ -51,6 +55,10 @@ public class CustomerTableController {
 
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
+    /**
+     * This method initializes the CustomerTableController
+     * @throws SQLException
+     */
     public void initialize() throws SQLException{
         try {
             customerList = CustomerManager.getCustomerList();
@@ -65,16 +73,15 @@ public class CustomerTableController {
         countryColumn.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("divisionCountryId"));
 
 
-
-
-
-
-
-        
         allCustomersTable.setItems(customerList);
 
 
     }
+    /**
+     * This method switches the scene to the customerUpdate.fxml view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionAddCustomersButton(ActionEvent event) throws IOException {
@@ -85,6 +92,11 @@ public class CustomerTableController {
 
 
     }
+    /**
+     * This method switches the scene to the appointments.fxml view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionAppointmentsButton(ActionEvent event) throws IOException {
@@ -94,16 +106,23 @@ public class CustomerTableController {
         stage.show();
 
         System.out.println("Switching back to Appointments View");
-
-
-
     }
+    /**
+     * This method switches the scene to the customerUpdate.fxml view
+     * @param event
+     * @throws IOException
+     */
+
 
     @FXML
     void onActionDeleteCustomersButton(ActionEvent event) {
 
 
     }
+    /**
+     * This method switches the scene to the login.fxml view
+     * @param event
+     */
 
     @FXML
     void onActionLogoutButton(ActionEvent event) {
@@ -111,11 +130,22 @@ public class CustomerTableController {
         System.exit(0);
 
     }
+    /**
+     * This method switches the scene to the customerUpdate.fxml view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionModifyCustomersButton(ActionEvent event) {
 
+
     }
+    /**
+     * This method switches the scene to the reportsFirstScreen.fxml view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionReportsButton(ActionEvent event) throws IOException {
@@ -126,6 +156,4 @@ public class CustomerTableController {
 
 
     }
-
-
 }

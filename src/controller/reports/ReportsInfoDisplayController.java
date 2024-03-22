@@ -24,9 +24,15 @@ import model.Appointment;
 import model.AppointmentMonthStat;
 import model.Contacts;
 
+/**
+ * This class is the controller for the ReportsInfoDisplay.fxml view
+ */
 public class ReportsInfoDisplayController {
     Stage stage;
     Parent scene;
+
+    @FXML
+    private ChoiceBox<String> appointmentTypeChoiceBox;
 
     @FXML
     private TableView<Appointment> contactScheduleTable;
@@ -67,8 +73,12 @@ public class ReportsInfoDisplayController {
     @FXML
     void onContactChanged(ActionEvent event) {
         System.out.println("Contact changed");
-
     }
+    /**
+     * This method switches the scene to the reportsFirstScreen.fxml view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionBackButton(ActionEvent event) throws IOException {
@@ -76,10 +86,14 @@ public class ReportsInfoDisplayController {
         scene = FXMLLoader.load(getClass().getResource("/view/reportsFirstScreen.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
-
     }
+    /**
+     * This method updates the contact schedule table
+     * @throws SQLException
+     */
 
     private Contacts selectedContact;
+    private String selectedType;
 
     public void initialize() throws SQLException {
 
@@ -87,7 +101,6 @@ public class ReportsInfoDisplayController {
         ObservableList<Contacts> contactOptions = ContactManager.getContactList();
 
         contactSelection.setItems(contactOptions);
-
         contactSelection.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -106,7 +119,6 @@ public class ReportsInfoDisplayController {
         csAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("id"));
         csTitleCol.setCellValueFactory(new PropertyValueFactory<Appointment, String>("title"));
         csDescriptionCol.setCellValueFactory(new PropertyValueFactory<Appointment, String>("description"));
-
         csTypeCol.setCellValueFactory(new PropertyValueFactory<Appointment, String>("type"));
         csStartTimeCol.setCellValueFactory(new PropertyValueFactory<Appointment, Timestamp>("startTime"));
         csEndTimeCol.setCellValueFactory(new PropertyValueFactory<Appointment, Timestamp>("endTime"));
@@ -114,12 +126,34 @@ public class ReportsInfoDisplayController {
 
         updateContactSchedule();
 
-        // Total Customers by Month report setup
+        // Total Appointments by Type by Month report setup
         tcMonthCol.setCellValueFactory(new PropertyValueFactory<AppointmentMonthStat, String>("month"));
         tcTotalCol.setCellValueFactory(new PropertyValueFactory<AppointmentMonthStat, Integer>("total"));
 
-        generateCustomerMonthStats();
+        // set the appointment type options
+        ObservableList<String> typeOptions = AppointmentManager.getAllAppointmentTypes();
+        appointmentTypeChoiceBox.setItems(typeOptions);
+
+        appointmentTypeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                // set the selected appointment type
+                selectedType = typeOptions.get((Integer) number2);
+
+                try {
+                    generateAppointmentMonthStats();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        generateAppointmentMonthStats();
     }
+    /**
+     * This method updates the contact schedule table
+     * @throws SQLException
+     */
 
     private void updateContactSchedule() throws SQLException {
 
@@ -131,10 +165,15 @@ public class ReportsInfoDisplayController {
 
         contactScheduleTable.setItems(appointments);
     }
+    /**
+     * This method generates the appointment month stats
+     * @throws SQLException
+     */
 
-    private void generateCustomerMonthStats() throws SQLException {
+    private void generateAppointmentMonthStats() throws SQLException {
         // get all the appointments
         ObservableList<Appointment> appointments = AppointmentManager.getAppointmentList();
+
 
         // dictionary of all the months
         // key: month
@@ -157,6 +196,10 @@ public class ReportsInfoDisplayController {
 
         // loop through all of the appointments
         for(Appointment a : appointments) {
+            // check if it is the selected type
+            if(selectedType != null && !selectedType.equals("All") && !a.getType().equals(selectedType)) {
+                continue;
+            }
             // get the month of the appointment
             String month = a.getStartTime().getMonth().toString().toLowerCase();
             // get the current count of the month
@@ -180,10 +223,7 @@ public class ReportsInfoDisplayController {
             stats.add(stat);
 
         }
-
-
         // update the table
         totalAppointmentsByMonth.setItems(stats);
     }
-
 }

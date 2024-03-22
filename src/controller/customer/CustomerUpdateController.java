@@ -16,6 +16,9 @@ import model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+/**
+ * This class is the controller for the CustomerUpdate.fxml view
+ */
 
 public class CustomerUpdateController {
     Stage stage;
@@ -42,6 +45,11 @@ public class CustomerUpdateController {
     @FXML
     private TextField customerPostalTxt;
 
+    /**
+     * This method changes the scene to the Customer.fxml view
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionBackBtn(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -52,6 +60,11 @@ public class CustomerUpdateController {
         System.out.println("Switching to the Customer.fxml view");
 
     }
+    /**
+     * This method saves the customer updates and changes the scene to the Customer.fxml view
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionSaveCustomerUpdates(ActionEvent event) throws IOException {
@@ -78,17 +91,6 @@ public class CustomerUpdateController {
     customerNameTxt.setText(customerObservableList.get(0).getName());
     //test to see if commit works
 
-
-
-
     }
-
-
-
-
-
-
-
-
 
 }

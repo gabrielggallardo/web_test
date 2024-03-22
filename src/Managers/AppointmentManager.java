@@ -10,8 +10,33 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * This class is the manager for the appointments table in the database
+ */
 public class AppointmentManager {
 
+    // get all unique appointment types from the database
+    public static ObservableList<String> getAllAppointmentTypes() throws SQLException {
+        ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
+
+        String sql = "SELECT DISTINCT Type FROM appointments";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        // add an "all" option to the appointment types list
+        appointmentTypes.add("All");
+
+        while (rs.next()) {
+            appointmentTypes.add(rs.getString("Type"));
+        }
+
+        return appointmentTypes;
+    }
+    /**
+     * This method gets all appointments from the database
+     * @return an ObservableList of all appointments
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAllAppointmentsForContact(Contacts contact) throws SQLException {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Contact_ID = ?";
@@ -42,6 +67,11 @@ public class AppointmentManager {
         return appointmentList;
     }
 
+    /**
+     * This method gets all appointments from the database
+     * @return an ObservableList of all appointments
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAppointmentsInDateRange(LocalDate start, LocalDate end ) throws SQLException {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Start BETWEEN ? AND ?";
@@ -72,6 +102,11 @@ public class AppointmentManager {
         return appointmentList;
     }
 
+    /**
+     * This method gets all appointments from the database
+     * @return an ObservableList of all appointments
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAppointmentList() throws SQLException {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
 
@@ -103,6 +138,19 @@ public class AppointmentManager {
         return appointmentList;
     }
 
+    /**
+     * This method updates an appointment to the database
+     * @param appointmentTitle the title of the appointment
+     * @param appointmentDescription the description of the appointment
+     * @param appointmentLocation the location of the appointment
+     * @param appointmentType the type of the appointment
+     * @param appointmentStartTime the start time of the appointment
+     * @param appointmentEndTime the end time of the appointment
+     * @param customerID the customer ID of the appointment
+     * @param userID the user ID of the appointment
+     * @param contactID the contact ID of the appointment
+     * @throws SQLException
+     */
 
     public static void updateAppointment(int appointmentID, String appointmentTitle, String appointmentDescription, String appointmentLocation,
                                          String appointmentType, LocalDateTime appointmentStartTime, LocalDateTime appointmentEndTime,
@@ -120,6 +168,19 @@ public class AppointmentManager {
         updateAppointment.execute();
 
     }
+    /**
+     * This method adds an appointment to the database
+     * @param appointmentTitle the title of the appointment
+     * @param appointmentDescription the description of the appointment
+     * @param appointmentLocation the location of the appointment
+     * @param appointmentType the type of the appointment
+     * @param appointmentStartTime the start time of the appointment
+     * @param appointmentEndTime the end time of the appointment
+     * @param customerID the customer ID of the appointment
+     * @param userID the user ID of the appointment
+     * @param contactID the contact ID of the appointment
+     * @throws SQLException
+     */
 
     public static void addAppointment(String appointmentTitle, String appointmentDescription, String appointmentLocation,
                                       String appointmentType, LocalDateTime appointmentStartTime, LocalDateTime appointmentEndTime,
@@ -139,7 +200,11 @@ public class AppointmentManager {
         insertAppointment.executeUpdate();
     }
 
-
+    /**
+     * This method deletes an appointment from the database
+     * @param id the appointment ID to be deleted
+     * @throws SQLException
+     */
     public static void deleteAppointment(int id) throws SQLException {
         String sqldelete = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement deleteAppointment = JDBC.connection.prepareStatement(sqldelete);

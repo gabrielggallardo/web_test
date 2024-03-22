@@ -5,6 +5,12 @@ public class Division {
     private String name;
     private Country country;
 
+    /**
+     * This is the constructor for the Division class
+     * @param id
+     * @param name
+     * @param country
+     */
     public Division(int id, String name, Country country){
         this.id = id;
         this.name = name; //this is the name of the division

@@ -5,6 +5,12 @@ public class User {
     private String username;
     private String password;
 
+    /**
+     * This is the constructor for the User class
+     * @param id
+     * @param username
+     * @param password
+     */
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;

@@ -10,9 +10,16 @@ import model.Division;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * This class is the manager for the first_level_divisions table
+ */
 public class DivisionManager {
 
+    /**
+     * This method gets the division list from the first_level_divisions table
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Division> getDivisionList() throws SQLException{
         ObservableList<Division> divisionList = FXCollections.observableArrayList();
 
