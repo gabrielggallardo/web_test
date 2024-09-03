@@ -53,6 +53,7 @@ public class LoginViewController implements Initializable {
         if(fieldsAreValid()){
             System.out.println("fields are valid");
             errorLabel.setVisible(false);
+            System.out.println("1");
             //if they are valid
             attemptLogin(event);
         }
@@ -105,6 +106,7 @@ public class LoginViewController implements Initializable {
     ResourceBundle langBundle = ResourceBundle.getBundle("lang");
 
     void attemptLogin(ActionEvent event) throws SQLException, IOException {
+        System.out.println("attempting login");
         ObservableList<User> allUsers = UserManager.getUserList();
         System.out.println(allUsers.size());
         //look through the users

@@ -21,9 +21,9 @@ public class UserManager {
      */
     public static ObservableList<User> getUserList() throws SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList();
-
         String sql = "SELECT * FROM users";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        System.out.println("test");
         ResultSet rs = ps.executeQuery();
 
         // loop through each returned row from the database
