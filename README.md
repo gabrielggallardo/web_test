@@ -4,7 +4,7 @@ Purpose: Access existing database and adding functionality for adding, updating,
 Author: Gabriel Gallardo
 Student ID# 000985578
 Application Version 1.3
-Date: 2/24/24
+Date: 9/7/24
 
 IDE: IntelliJ IDEA 2021.1.3 (Community Edition) x64
 JDK version: Java 17.0.3
