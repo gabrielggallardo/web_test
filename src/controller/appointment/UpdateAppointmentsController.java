@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter;
  * This class is the controller for the AddAppointments.fxml view
  */
 
-public class AddAppointmentsController {
+public class UpdateAppointmentsController {
     Stage stage;
     Parent scene;
 
@@ -130,7 +130,7 @@ public class AddAppointmentsController {
             ObservableList<Appointment> allAppointments = AppointmentManager.getAppointmentList();
 
             for(Appointment appointment : allAppointments){
-                if(appointment.getCustomerID() == customerID){
+                if(appointment.getCustomerID() == customerID && appointment.getId() != id){
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     if(appointment.getStartTime().isBefore(LocalDateTime.parse(endDate + " " + endTime, formatter)) && appointment.getEndTime().isAfter(LocalDateTime.parse(startDate + " " + startTime, formatter))){
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -160,7 +160,7 @@ public class AddAppointmentsController {
 
         // save the appointment to the database
         try {
-            AppointmentManager.addAppointment(title, description, location, type, startDateTime, endDateTime, customerID, userID, contactID);
+            AppointmentManager.updateAppointment(id, title, description, location, type, startDateTime, endDateTime, customerID, userID, contactID);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
 
@@ -182,10 +182,9 @@ public class AddAppointmentsController {
     private ObservableList<Customer> customerOptions = FXCollections.observableArrayList();
 
     /**
-     * This method initializes the AddAppointments view
+     * This method initializes the view
      * @throws SQLException
      */
-
     public void initialize() throws SQLException{
         ObservableList<Contacts> allContacts = ContactManager.getContactList();
         ObservableList<User> allUsers = UserManager.getUserList();
@@ -198,14 +197,26 @@ public class AddAppointmentsController {
         userIDComboBox.setItems(allUsers);
         customerIDComboBox.setItems(allCustomers);
 
-        // set the id to the next available id
-        ObservableList<Appointment> allAppointments = AppointmentManager.getAppointmentList();
-        if(allAppointments.size() == 0){
-            appointmentIDTxt.setText("1");
-        }else {
-            int id = allAppointments.get(allAppointments.size() - 1).getId() + 1;
-            appointmentIDTxt.setText(String.valueOf(id));
-        }
+    }
+
+    /**
+     * This method sends the appointment to the view
+     * @param appointment
+     */
+
+    public void sendAppointment(Appointment appointment){
+        appointmentIDTxt.setText(String.valueOf(appointment.getId()));
+        titleTxt.setText(appointment.getTitle());
+        descriptionTxt.setText(appointment.getDescription());
+        locationTxt.setText(appointment.getLocation());
+        typeTxt.setText(appointment.getType());
+        startDatePicker.setValue(appointment.getStartTime().toLocalDate());
+        startTimeComboBox.setValue(appointment.getStartTime().toLocalTime().toString());
+        endDatePicker.setValue(appointment.getEndTime().toLocalDate());
+        endTimeComboBox.setValue(appointment.getEndTime().toLocalTime().toString());
+        customerIDComboBox.setValue(CustomerManager.getCustomer(appointment.getCustomerID()));
+        userIDComboBox.setValue(UserManager.getUser(appointment.getUserID()));
+        contactIDComboBox.setValue(ContactManager.getContact(appointment.getContactID()));
     }
 
 }

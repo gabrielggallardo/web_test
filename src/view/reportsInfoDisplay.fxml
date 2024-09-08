@@ -64,6 +64,7 @@
             <TableView fx:id="totalAppointmentsByMonth" prefHeight="183.0" prefWidth="630.0">
                <columns>
                   <TableColumn fx:id="tcMonthCol" prefWidth="194.0" text="Month" />
+                  <TableColumn fx:id="tcTypeCol" prefWidth="204.0" text="Type" />
                   <TableColumn fx:id="tcTotalCol" prefWidth="204.0" text="Total" />
                </columns>
             </TableView>

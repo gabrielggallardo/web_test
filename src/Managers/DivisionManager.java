@@ -22,16 +22,18 @@ public class DivisionManager {
      */
     public static ObservableList<Division> getDivisionList() throws SQLException{
         ObservableList<Division> divisionList = FXCollections.observableArrayList();
+        // get the division list from the first_level_divisions table along with the country id and name
 
-        String sql = "SELECT * FROM first_level_divisions";
+        String sql = "SELECT * FROM first_level_divisions JOIN countries ON first_level_divisions.COUNTRY_ID = countries.Country_ID";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()){
+            Country country = new Country(rs.getInt("COUNTRY_ID"),
+                    rs.getString("Country"));
             Division division = new Division(rs.getInt("Division_ID"),
                     rs.getString("Division"),
-                    new Country(rs.getInt("Country_ID"), rs.getString("Unsure")));//very unsure how to properly do this
-
+                    country);
             divisionList.add(division);
         }
         return divisionList;

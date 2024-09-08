@@ -63,6 +63,8 @@
                   <TableColumn fx:id="startColumn" prefWidth="56.38323974609375" text="Start" />
                   <TableColumn fx:id="endColumn" prefWidth="75.11672973632812" text="End" />
                   <TableColumn fx:id="appointmentCustomerIDColumn" prefWidth="77.11676025390625" text="Customer ID" />
+                  <TableColumn fx:id="appointmentCustomerIDColumn1" prefWidth="77.11676025390625" text="Contact ID" />
+                  <TableColumn fx:id="appointmentCustomerIDColumn11" prefWidth="77.11676025390625" text="User ID" />
               </columns>
                <VBox.margin>
                   <Insets left="4.0" right="4.0" />

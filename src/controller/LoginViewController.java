@@ -1,6 +1,8 @@
 package controller;
 
+import Managers.AppointmentManager;
 import Managers.UserManager;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -9,16 +11,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.User;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.net.URL;
 import java.util.Objects;
@@ -47,6 +48,13 @@ public class LoginViewController implements Initializable {
     @FXML
     private TextField userNameTxt;
 
+    /**
+     * This method checks if the username and password are valid
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
+
     @FXML
     void loginButtonPressed(ActionEvent event) throws SQLException, IOException {
         //check if the fields are valid
@@ -57,7 +65,6 @@ public class LoginViewController implements Initializable {
             //if they are valid
             attemptLogin(event);
         }
-
         //if fields are not valid
         else{
             System.out.println("fields are not valid");
@@ -72,13 +79,21 @@ public class LoginViewController implements Initializable {
 
     }
 
+    /**
+     * This method logs the activity of the user
+     * @param activity
+     */
     @FXML
     void onPasswordInputChanged(KeyEvent event) {
         password = passwordTxt.getText();
         System.out.println(password);
         System.out.println("password input changed!");
-
     }
+
+    /**
+     * This method logs the activity of the user
+     * @param activity
+     */
 
     @FXML
     void onUserNameInputChanged(KeyEvent event) {
@@ -89,6 +104,10 @@ public class LoginViewController implements Initializable {
 
     }
 
+    /**
+     * This method checks the fields for validity
+     * @param activity
+     */
 
     boolean fieldsAreValid(){
         //check for empty username
@@ -104,6 +123,13 @@ public class LoginViewController implements Initializable {
         return true;
     }
     ResourceBundle langBundle = ResourceBundle.getBundle("lang");
+
+    /**
+     * This method looks through the users and checks if the username and password match
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
 
     void attemptLogin(ActionEvent event) throws SQLException, IOException {
         System.out.println("attempting login");
@@ -130,6 +156,9 @@ public class LoginViewController implements Initializable {
             //log the activity
             logActivity("User: " + username + " logged in at: " + java.time.LocalDateTime.now() + "\n");
 
+            // check for upcoming appointments
+            checkForUpcomingAppointments();
+
             //go to the next screen
 
             Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/customer.fxml")));
@@ -151,6 +180,11 @@ public class LoginViewController implements Initializable {
 
     }
 
+    /**
+     * This method initializes the login view
+     * @param url
+     * @param resourceBundle
+     */
 
 
     @Override
@@ -167,6 +201,10 @@ public class LoginViewController implements Initializable {
 
     }
 
+    /**
+     * This method logs the activity of the user to a file called login_activity.txt
+     * @param entry
+     */
     private void logActivity(String entry) {
         System.out.println(entry);
 
@@ -184,6 +222,38 @@ public class LoginViewController implements Initializable {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * This method checks for upcoming appointments and displays a message if there are any
+     */
+
+    private void checkForUpcomingAppointments() {
+        // get all appointments
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        try {
+            allAppointments = AppointmentManager.getAppointmentList();
+        } catch (SQLException e) {
+            System.out.println("Error occurred when getting all appointments");
+        }
+
+        // get the current date and time
+        LocalDateTime now = LocalDateTime.now();
+
+        // check if there are any appointments within the next 15 minutes
+        for (Appointment a : allAppointments) {
+            if (a.getStartTime().isAfter(now) && a.getStartTime().isBefore(now.plusMinutes(15))) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Upcoming Appointment");
+                alert.setHeaderText("You have an appointment within the next 15 minutes");
+                alert.setContentText("Appointment ID: " + a.getId() + "\n" +
+                        "Start Time: " + a.getStartTime().toString() + "\n" +
+                        "End Time: " + a.getEndTime().toString() + "\n" +
+                        "Customer ID: " + a.getId());
+                alert.showAndWait();
+            }
         }
     }
 

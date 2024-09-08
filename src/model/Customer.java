@@ -25,7 +25,7 @@ public class Customer {
      * @return
      * @throws SQLException
      */
-    public Customer(int id, String name, String address, String postalCode, String phone, Division division, LocalDateTime createDate) {
+    public Customer(int id, String name, String address, String postalCode, String phone, Division division) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -34,8 +34,13 @@ public class Customer {
         this.division = division;
         this.divisionCountryId = division.getCountry().getCountryID();
         this.createDate = createDate;
+        this.createDate = LocalDateTime.now();
     }
 
+    /**
+     * This is the getters and setters for the Customer
+     * @return
+     */
 
     public int getId() {
         return id;
@@ -77,6 +82,10 @@ public class Customer {
         this.phone = phone;
     }
 
+    public Country getCountry() {
+        return division.getCountry();
+    }
+
     public Division getDivision() {
         return division;
     }
@@ -91,5 +100,9 @@ public class Customer {
     public LocalDateTime getCreateDate() {
         return createDate;
     }
-// setters and getters for Customers.
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -20,12 +20,17 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import model.Contacts;
+import model.Customer;
+import model.User;
+
 /**
  * This class is the controller for the AppointmentTable.fxml view
  */
@@ -34,6 +39,14 @@ import javafx.scene.control.TableView;
 public class AppointmentTableController {
     Stage stage;
     Parent scene;
+
+
+
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentCustomerIDColumn1;
+
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentCustomerIDColumn11;
 
 
     @FXML
@@ -110,6 +123,8 @@ public class AppointmentTableController {
         startColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Timestamp>("startTime"));
         endColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Timestamp>("endTime"));
         appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
+        appointmentCustomerIDColumn1.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("contactID"));
+        appointmentCustomerIDColumn11.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("userID"));
 
         allAppointmentsTable.setItems(appointmentList);
 
@@ -174,7 +189,6 @@ public class AppointmentTableController {
                 System.out.println("Error occurred when getting AppointmentList");
             }
 
-            allAppointmentsTable.setItems(appointmentList);
         }
         else {
             // fetch all the appointments
@@ -184,8 +198,8 @@ public class AppointmentTableController {
                 System.out.println("Error occurred when getting AppointmentList");
             }
 
-            allAppointmentsTable.setItems(appointmentList);
         }
+        allAppointmentsTable.setItems(appointmentList);
     }
     /**
      * This method is used to change the scene to the AddAppointment.fxml view
@@ -351,20 +365,18 @@ public class AppointmentTableController {
 
 
     }
+
+
     /**
      * This method is used to change the scene to the AddAppointment.fxml view
      * @throws IOException
      */
-
-
     @FXML
     void onActionAddAppointmentsButton(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/addAppointments.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
-        //appointmentList.add(new Appointment(7, "title", "description", "location", "type", LocalDateTime.now(), LocalDateTime.now(), 1,1,1));
-
     }
     /**
      * This method is used to change the scene to the AddAppointment.fxml view
@@ -382,15 +394,73 @@ public class AppointmentTableController {
 
     }
 
+    /**
+     * This method warns before deleting an appointment and then deletes the appointment
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionDeleteAppointmentsButton(ActionEvent event) {
+        // get the selected appointment
+        Appointment selectedAppointment = allAppointmentsTable.getSelectionModel().getSelectedItem();
+
+        // show an alert to confirm the deletion
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Appointment");
+        alert.setHeaderText("Are you sure you want to delete the appointment with ID: " + selectedAppointment.getId() + "?");
+        alert.setContentText("Press OK to confirm, or Cancel to go back.");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                // delete the appointment
+                try {
+                    AppointmentManager.deleteAppointment(selectedAppointment.getId());
+
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Success");
+                    successAlert.setHeaderText("The appointment was successfully deleted.");
+                    successAlert.setContentText("The appointment with ID: " + selectedAppointment.getId() + " was deleted.");
+                    successAlert.showAndWait();
+
+                    updateAppointmentsData();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error");
+                    errorAlert.setHeaderText("There was an error deleting the appointment.");
+                    errorAlert.setContentText("Please try again.");
+                    errorAlert.showAndWait();
+                }
+            }
+        });
 
     }
 
+    /**
+     * This method is used to change the scene to the UpdateAppointment.fxml view
+     * @param event
+     */
+
     @FXML
     void onActionModifyAppointmentsButton(ActionEvent event) {
+        // take the user to the Update Appointment screen
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/updateAppointments.fxml"));
+            loader.load();
 
+            UpdateAppointmentsController updateAppointmentsController = loader.getController();
+            updateAppointmentsController.sendAppointment(allAppointmentsTable.getSelectionModel().getSelectedItem());
+
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

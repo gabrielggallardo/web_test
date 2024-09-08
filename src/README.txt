@@ -33,7 +33,7 @@ appointment, the add button will allow a user to create a new appointment and th
 The customer button will take you back to the customer screen and the reports button will take you back to the reports screen.
 
 REPORTS:
-The report button will take you to the report list where there will be two buttons. One of each button will contain a report, one linking to the contact schedule and then linking also to the total appointments by type. 
+The report button will take you to the report list where there will be two buttons. One of each button will contain a report, one linking to the contact schedule and then linking also to the total appointments by type.
 The contact schedules tab has a combobox that allows you to select a contact and will display appointments associated with the content in the tableview.
 
 REPORT A3F: The total new customers for each and every month.

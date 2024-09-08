@@ -1,5 +1,8 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -43,6 +46,9 @@ public class Appointment {
     }
     //getters and setters for Appointments
 
+    /** this are the getters and setters for the Appointment class
+     * @return
+     */
 
     public int getId() {
         return id;
@@ -122,5 +128,50 @@ public class Appointment {
 
     public void setContactID(int contactID) {
         this.contactID = contactID;
+    }
+
+
+    /**
+     * This is a method that returns a list of appointment types
+     * @return
+     */
+    // method that returns a list of time slots for appointments
+    // options are from (7:00 AM to 11:00 PM)
+    public static ObservableList<String> getAppointmentTimeSlots(){
+        ObservableList<String> timeSlots = FXCollections.observableArrayList();
+        timeSlots.add("07:00");
+        timeSlots.add("07:30");
+        timeSlots.add("08:00");
+        timeSlots.add("08:30");
+        timeSlots.add("09:00");
+        timeSlots.add("09:30");
+        timeSlots.add("10:00");
+        timeSlots.add("10:30");
+        timeSlots.add("11:00");
+        timeSlots.add("11:30");
+        timeSlots.add("12:00");
+        timeSlots.add("12:30");
+        timeSlots.add("13:00");
+        timeSlots.add("13:30");
+        timeSlots.add("14:00");
+        timeSlots.add("14:30");
+        timeSlots.add("15:00");
+        timeSlots.add("15:30");
+        timeSlots.add("16:00");
+        timeSlots.add("16:30");
+        timeSlots.add("17:00");
+        timeSlots.add("17:30");
+        timeSlots.add("18:00");
+        timeSlots.add("18:30");
+        timeSlots.add("19:00");
+        timeSlots.add("19:30");
+        timeSlots.add("20:00");
+        timeSlots.add("20:30");
+        timeSlots.add("21:00");
+        timeSlots.add("21:30");
+        timeSlots.add("22:00");
+        timeSlots.add("22:30");
+        timeSlots.add("23:00");
+        return timeSlots;
     }
 }

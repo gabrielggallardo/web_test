@@ -9,11 +9,58 @@ import model.Contacts;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class is the manager for the appointments table in the database
  */
 public class AppointmentManager {
+
+    /**
+     * This method gets all the appointments for a specific customer
+     * @return
+     * @throws SQLException
+     */
+    public static ObservableList<Appointment> getAllAppointmentsForCustomer(int customerID) throws SQLException {
+        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String appointmentDescription = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            String appointmentType = rs.getString("Type");
+            LocalDateTime appointmentStartTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEndTime = rs.getTimestamp("End").toLocalDateTime();
+            int userID = rs.getInt("User_ID");
+            int contactID = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    appointmentDescription,
+                    appointmentLocation,
+                    appointmentType,
+                    appointmentStartTime,
+                    appointmentEndTime,
+                    customerID,
+                    userID,
+                    contactID);
+            appointmentList.add(appointment);
+        }
+        return appointmentList;
+    }
+
+    /**
+     * This method gets all appointments from the database
+     * @return an ObservableList of all appointments
+     * @throws SQLException
+     */
+    public static void deleteAllAppointmentsForCustomer(int customerID) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ps.executeUpdate();
+    }
 
     // get all unique appointment types from the database
     public static ObservableList<String> getAllAppointmentTypes() throws SQLException {
@@ -163,7 +210,10 @@ public class AppointmentManager {
         updateAppointment.setString(4, appointmentType);
         updateAppointment.setTimestamp(5, Timestamp.valueOf(appointmentStartTime));
         updateAppointment.setTimestamp(6, Timestamp.valueOf(appointmentEndTime));
-        updateAppointment.setInt(7, userID);
+        updateAppointment.setInt(7, customerID);
+        updateAppointment.setInt(8, userID);
+        updateAppointment.setInt(9, contactID);
+        updateAppointment.setInt(10, appointmentID);
 
         updateAppointment.execute();
 
@@ -187,7 +237,6 @@ public class AppointmentManager {
                                       int customerID, int userID, int contactID) throws SQLException {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?)";
         PreparedStatement insertAppointment = JDBC.connection.prepareStatement(sql);
-
         insertAppointment.setString(1, appointmentTitle);
         insertAppointment.setString(2, appointmentDescription);
         insertAppointment.setString(3, appointmentLocation);

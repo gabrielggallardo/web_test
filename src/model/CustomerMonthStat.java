@@ -14,6 +14,11 @@ public class CustomerMonthStat {
         this.total = total;
     }
 
+    /**
+     * This is the getters and setters for the CustomerMonthStat
+     * @return
+     */
+
     public String getMonth() {
         return month;
     }

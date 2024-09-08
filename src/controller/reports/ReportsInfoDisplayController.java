@@ -68,6 +68,9 @@ public class ReportsInfoDisplayController {
     private TableColumn<AppointmentMonthStat, Integer> tcTotalCol;
 
     @FXML
+    private TableColumn<AppointmentMonthStat, String> tcTypeCol;
+
+    @FXML
     private TableView<AppointmentMonthStat> totalAppointmentsByMonth;
 
     @FXML
@@ -94,6 +97,11 @@ public class ReportsInfoDisplayController {
 
     private Contacts selectedContact;
     private String selectedType;
+
+    /**
+     * This method initializes the ReportsInfoDisplayController
+     * @throws SQLException
+     */
 
     public void initialize() throws SQLException {
 
@@ -129,6 +137,7 @@ public class ReportsInfoDisplayController {
         // Total Appointments by Type by Month report setup
         tcMonthCol.setCellValueFactory(new PropertyValueFactory<AppointmentMonthStat, String>("month"));
         tcTotalCol.setCellValueFactory(new PropertyValueFactory<AppointmentMonthStat, Integer>("total"));
+        tcTypeCol.setCellValueFactory(new PropertyValueFactory<AppointmentMonthStat, String>("type"));
 
         // set the appointment type options
         ObservableList<String> typeOptions = AppointmentManager.getAllAppointmentTypes();
@@ -176,22 +185,11 @@ public class ReportsInfoDisplayController {
 
 
         // dictionary of all the months
-        // key: month
+        // key: month-type
         // value: count
         Map<String, Integer> months = new HashMap<>() {{
             // add all the months to the dictionary
-            put("january", 0);
-            put("february", 0);
-            put("march", 0);
-            put("april", 0);
-            put("may", 0);
-            put("june", 0);
-            put("july", 0);
-            put("august", 0);
-            put("september", 0);
-            put("october", 0);
-            put("november", 0);
-            put("december", 0);
+
         }};
 
         // loop through all of the appointments
@@ -201,13 +199,19 @@ public class ReportsInfoDisplayController {
                 continue;
             }
             // get the month of the appointment
-            String month = a.getStartTime().getMonth().toString().toLowerCase();
+            String monthAndType = a.getStartTime().getMonth().toString().toLowerCase() + "-" + a.getType().toLowerCase();
+            // check if the month-type is in the dictionary
+            if(!months.containsKey(monthAndType)) {
+                // if not, add it with a count of 0
+                months.put(monthAndType, 0);
+            }
+
             // get the current count of the month
-            int count = months.get(month);
+            int count = months.get(monthAndType);
             // increment the count
             count++;
             // update the count in the dictionary
-            months.put(month, count);
+            months.put(monthAndType, count);
         }
 
         // create list of stats
@@ -216,8 +220,15 @@ public class ReportsInfoDisplayController {
         // loop through the months dictionary
         for(Map.Entry<String, Integer> entry : months.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
+            // split the key into month and type
+            String[] parts = entry.getKey().split("-");
+            String month = parts[0];
+            if(parts.length < 2) {
+                continue;
+            }
+            String type = parts[1];
             // create a stats object
-            AppointmentMonthStat stat = new AppointmentMonthStat(entry.getKey(), entry.getValue());
+            AppointmentMonthStat stat = new AppointmentMonthStat(month, entry.getValue(), type);
 
             // add the stat to the list
             stats.add(stat);

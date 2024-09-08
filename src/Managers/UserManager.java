@@ -41,4 +41,27 @@ public class UserManager {
 
         return userList;
     }
+
+    /**
+     * This method gets the user
+     * @param userID
+     * @return
+     */
+    public static User getUser(int userID) {
+        User user = null;
+        try {
+            String sql = "SELECT * FROM users WHERE User_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User(rs.getInt("User_ID"),
+                        rs.getString("User_Name"),
+                        rs.getString("Password"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

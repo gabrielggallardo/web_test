@@ -1,6 +1,8 @@
 package controller.customer;
 
+import Managers.CountryManager;
 import Managers.CustomerManager;
+import Managers.DivisionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,13 +30,13 @@ public class CustomerUpdateController {
     private TextField customerAddressTxt;
 
     @FXML
-    private ComboBox<String> customerCountryComboBox; //fix the line ups
+    private ComboBox<Country> customerCountryComboBox; //fix the line ups
 
     @FXML
     private TextField customerIDTxt;
 
     @FXML
-    private ComboBox<String> customerDivisionComboBox;
+    private ComboBox<Division> customerDivisionComboBox;
 
     @FXML
     private TextField customerNameTxt;
@@ -77,20 +79,33 @@ public class CustomerUpdateController {
     }
     private ObservableList<Customer> customerOptions = FXCollections.observableArrayList();
 
+    /**
+     * This method initializes the CustomerUpdate.fxml view
+     * @throws SQLException
+     */
     public void initialize() throws SQLException {
-    ObservableList<Customer> customerObservableList = CustomerManager.getCustomerList();
-    ObservableList<String> allCustomerNames = FXCollections.observableArrayList();
+        ObservableList<Country> customerCountries = CountryManager.getCountryList();
+        ObservableList<Division> customerDivisions = DivisionManager.getDivisionList();
 
-    customerObservableList.forEach(customer -> allCustomerNames.add(customer.getName()));
-    ObservableList<String> customerCountries = FXCollections.observableArrayList();
-    ObservableList<String> customerDivisions = FXCollections.observableArrayList();
+        customerCountryComboBox.setItems(customerCountries);
+        customerDivisionComboBox.setItems(customerDivisions);
+        //test to see if commit works
 
-    customerCountryComboBox.setItems(customerCountries);
-    customerDivisionComboBox.setItems(customerDivisions);
-    customerIDTxt.setId(String.valueOf(customerObservableList));
-    customerNameTxt.setText(customerObservableList.get(0).getName());
-    //test to see if commit works
+    }
 
+    /**
+     * This method sends the customer object to the CustomerUpdate.fxml view
+     * @param customer
+     */
+
+    public void sendCustomer(Customer customer) {
+        customerIDTxt.setText(String.valueOf(customer.getId()));
+        customerNameTxt.setText(customer.getName());
+        customerAddressTxt.setText(customer.getAddress());
+        customerPostalTxt.setText(customer.getPostalCode());
+        customerPhoneNumberTxt.setText(customer.getPhone());
+        customerCountryComboBox.setValue(customer.getDivision().getCountry());
+        customerDivisionComboBox.setValue(customer.getDivision());
     }
 
 }

@@ -17,6 +17,11 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * This is the getter and setters for User
+     * @return
+     */
+
     public int getId() {
         return id;
     }
@@ -39,5 +44,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }

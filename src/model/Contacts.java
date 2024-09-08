@@ -17,6 +17,11 @@ public class Contacts {
         this.contactEmail = contactEmail;
     }
 
+    /**
+     * This is the getter and setters for Contacts
+     * @return
+     */
+
     public int getContactID() {
         return contactID;
     }

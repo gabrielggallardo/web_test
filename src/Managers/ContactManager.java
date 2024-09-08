@@ -36,11 +36,11 @@ public class ContactManager {
         }
         return contactList;
     }
+
     /**
-     * This method finds a contact in the contacts table
-     * @param id
-     * @param name
-     * @param email
+     * This method finds the contact ID
+     * @param contactID
+     * @return
      * @throws SQLException
      */
     public static String findContactID(String contactID) throws SQLException{
@@ -54,6 +54,26 @@ public class ContactManager {
     }
 
 
-
-
+    /**
+     * This method gets the contact
+     * @param contactID
+     * @return
+     */
+    public static Contacts getContact(int contactID) {
+        Contacts contact = null;
+        try {
+            String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, contactID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                contact = new Contacts(rs.getInt("Contact_ID"),
+                        rs.getString("Contact_Name"),
+                        rs.getString("Email"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contact;
+    }
 }

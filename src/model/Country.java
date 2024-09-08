@@ -14,6 +14,10 @@ public class Country {
         this.countryName = countryName;
     }
 
+    /**
+     * This is the getter and setters for Country
+     * @return
+     */
     public int getCountryID() {
         return countryID;
     }
@@ -28,5 +32,10 @@ public class Country {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    @Override
+    public String toString(){
+        return countryName;
     }
 }
